@@ -1,0 +1,11 @@
+.site-layout-content {
+    min-height: 280px;
+    padding: 24px;
+    background: #fff;
+}
+.content {
+    padding: '0 50px'
+}
+.ant-btn {
+    margin-right: 8px;
+}
