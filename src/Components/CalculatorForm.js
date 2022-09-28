@@ -10,7 +10,7 @@ export default function CalculatorForm(props) {
     };
     const onResultClear = () => {
         let results = {
-            termNoOfPayments : 0,
+            termNoOfPayments: 0,
             periodNoOfPayments: 0,
             termMortgagePayment: 0,
             periodMortgagePayment: 0,
@@ -38,45 +38,45 @@ export default function CalculatorForm(props) {
         },
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         onResultClear();
-    },[])
+    }, [])
 
     const onFinish = (values) => {
         let amortizationPeriod = values.amortizationPeriod
-        let interestRate = values.interestRate
+        let interestRate = values.interestRate / 100;
         let mortgageAmount = values.mortgageAmount
         let paymentFrequency = values.paymentFrequency
         let term = values.term
-
-        let numberOfMonths = amortizationPeriod * 12;
 
         let termNoOfPayments = term * 12;
         let periodNoOfPayments = amortizationPeriod * 12;
 
         let mortgagePayment = (mortgageAmount * interestRate) /
-            (1 - Math.pow(1 + interestRate, numberOfMonths * -1)).toFixed(2);
+            (paymentFrequency * (1 - Math.pow(1 + interestRate / paymentFrequency, amortizationPeriod * -paymentFrequency)));
+        mortgagePayment = mortgagePayment;
 
-        let termPrinciplePayment = 0;
-        let periodPrinciplePayment = 0;
+        let termPrinciplePayment = ((mortgageAmount * (interestRate / paymentFrequency) * Math.pow(1 + interestRate / paymentFrequency, term * paymentFrequency)) / ((Math.pow(1 + interestRate / paymentFrequency, term * paymentFrequency) - 1))) - mortgageAmount * interestRate / paymentFrequency;;
+        termPrinciplePayment = termPrinciplePayment;
+        let periodPrinciplePayment = mortgageAmount;
 
-        let termInterestPayment = 0;
-        let periodInterestPayment = 0;
+        let termInterestPayment = Math.abs(paymentFrequency * mortgagePayment * term - mortgageAmount);
+        let periodInterestPayment = Math.abs(paymentFrequency * mortgagePayment * amortizationPeriod - mortgageAmount);
 
-        let termTotalCost = 0;
-        let periodTotalCost = 0;
+        let termTotalCost = termPrinciplePayment + termInterestPayment;
+        let periodTotalCost = periodPrinciplePayment + periodInterestPayment;
 
         let results = {
-            termNoOfPayments : termNoOfPayments,
+            termNoOfPayments: termNoOfPayments,
             periodNoOfPayments: periodNoOfPayments,
-            termMortgagePayment: mortgagePayment,
-            periodMortgagePayment: mortgagePayment,
-            termPrinciplePayment: termPrinciplePayment,
-            periodPrinciplePayment: periodPrinciplePayment,
-            termInterestPayment: termInterestPayment,
-            periodInterestPayment: periodInterestPayment,
-            termTotalCost: termTotalCost,
-            periodTotalCost: periodTotalCost
+            termMortgagePayment: mortgagePayment.toFixed(2),
+            periodMortgagePayment: mortgagePayment.toFixed(2),
+            termPrinciplePayment: termPrinciplePayment.toFixed(2),
+            periodPrinciplePayment: periodPrinciplePayment.toFixed(2),
+            termInterestPayment: termInterestPayment.toFixed(2),
+            periodInterestPayment: periodInterestPayment.toFixed(2),
+            termTotalCost: termTotalCost.toFixed(2),
+            periodTotalCost: periodTotalCost.toFixed(2)
         }
         props.sendResultObject(results);
     }
