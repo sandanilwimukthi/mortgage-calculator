@@ -86,6 +86,7 @@ export default function CalculatorForm(props) {
             <Form {...layout}
                 form={form}
                 onFinish={onFinish}
+                data-testid='form'
             >
                 <Form.Item
                     name="mortgageAmount"
@@ -102,6 +103,7 @@ export default function CalculatorForm(props) {
                         style={{
                             width: '100%',
                         }}
+                        data-testid='mortgageAmount'
                     />
                 </Form.Item>
                 <Form.Item
@@ -119,6 +121,7 @@ export default function CalculatorForm(props) {
                         style={{
                             width: '100%',
                         }}
+                        data-testid='interestRate'
                     />
                 </Form.Item>
                 <Form.Item
@@ -131,7 +134,7 @@ export default function CalculatorForm(props) {
                         },
                     ]}
                 >
-                    <Select placeholder="Select The Amortization Period" style={{ width: '100%' }}>
+                    <Select data-testid='amortizationPeriod' placeholder="Select The Amortization Period" style={{ width: '100%' }}>
                         {[...Array(30)].map((_, i) => i + 1).map(val =>
                             <Option key={val} value={val}>{val} Years</Option>
                         )}
@@ -147,7 +150,7 @@ export default function CalculatorForm(props) {
                         },
                     ]}
                 >
-                    <Select placeholder="Select The Payment Frequency" style={{ width: '100%' }}>
+                    <Select data-testid='paymentFrequency' placeholder="Select The Payment Frequency" style={{ width: '100%' }}>
                         <Option key={1} value={'12'}>Monthly (12x per year)</Option>
                         <Option key={2} value={'24'}>Semi-Monthly (24x per year)</Option>
                     </Select>
@@ -162,17 +165,17 @@ export default function CalculatorForm(props) {
                         },
                     ]}
                 >
-                    <Select placeholder="Select The Term" style={{ width: '48%' }}>
+                    <Select data-testid='term' placeholder="Select The Term" style={{ width: '48%' }}>
                         {[...Array(10)].map((_, i) => i + 1).map(val =>
                             <Option key={val} value={val}>{val} Years</Option>
                         )}
                     </Select>
                 </Form.Item>
                 <Form.Item {...tailLayout} >
-                    <Button type="primary" htmlType="submit">
+                    <Button data-testid="calculate-button" type="primary" htmlType="submit">
                         Calculate
                     </Button>
-                    <Button htmlType="button" onClick={onReset}>
+                    <Button data-testid="resetButton" htmlType="button" onClick={onReset}>
                         Reset
                     </Button>
                 </Form.Item>

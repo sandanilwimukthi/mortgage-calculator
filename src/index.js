@@ -12,7 +12,7 @@ import { createRoot } from 'react-dom/client';
 const routing = (
   <Router>
     <div>
-      <Layout className="layout">
+      <Layout data-testid="rootLayout" className="layout">
         <PageHeader />      <hr />
         <Routes>
           <Route path="/" element={<CalculatorPage/>} />

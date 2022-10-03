@@ -67,6 +67,7 @@ export default function CalculatorResult(props) {
                     textAlign: 'center'
                 }}
                 size="small"
+                data-testid="result"
             />
         </div>
     )
